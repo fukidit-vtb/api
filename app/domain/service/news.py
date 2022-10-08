@@ -1,5 +1,6 @@
 from abc import ABC
 
+from app.adapter.recommeds.digests import search_instance
 from app.domain.entity.news import *
 
 
@@ -10,9 +11,18 @@ class NewsStorage(ABC):
 class NewsService:
     __slots__ = "repo",
 
-    async def list_(self, role: Roles, params: NewsFilter) -> NewsList:
+    @staticmethod
+    async def list_(role: Roles, params: NewsFilter) -> NewsList:
+        role_ru: str
+        if role == Roles.director:
+            role_ru = "Генеральный директор"
+        elif role == Roles.accountant:
+            role_ru = "Бухгалтер"
+        else:
+            raise NotImplemented(f"Role {role} doesn't exists")
+
         return NewsList(
             has_next=False,
-            list=[],
+            list=search_instance.search(role_ru),
             **params.dict(),
         )

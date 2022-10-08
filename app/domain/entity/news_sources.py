@@ -3,7 +3,8 @@ from pydantic import BaseModel
 
 class InputNews(BaseModel):
     source: str
-    data: str
+    title: str
+    body: str
 
 
 __all__ = [

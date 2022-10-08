@@ -1,5 +1,4 @@
 .env
-.env.*
 .idea
 
 # Created by https://www.toptal.com/developers/gitignore/api/pycharm,python,jetbrains+all
