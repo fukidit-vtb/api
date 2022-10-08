@@ -26,12 +26,7 @@ make test
 
 ### In Docker
 
-#### Build
-```shell
-make build
-```
-
 #### Run
 ```shell
-
+make docker-run
 ```

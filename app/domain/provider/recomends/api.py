@@ -1,19 +1,12 @@
 from abc import ABC, abstractmethod
+from typing import Callable, Coroutine, List
 
-from app.domain.entity.recipe import RecipeShort
-from app.domain.entity.recommends import *
+from app.domain.entity.news_sources import InputNews
 
 
-class RecommendProvider(ABC):
+class NewsSourceProvider(ABC):
     @abstractmethod
-    async def init_user(self, grades: list[str]) -> UserVector: ...
-
-    @abstractmethod
-    async def estimate(self, vector: UserVector, grade: GradeSubmit) -> UserVector: ...
-
-    @abstractmethod
-    async def similar_food(self, vector: UserVector, limit: int = 10) -> RecommendAPIList: ...
-
-    @classmethod
-    @abstractmethod
-    async def update_data(cls, recipes: list[RecipeShort]): ...
+    async def get_news(
+            self,
+            news_callback: Callable[[InputNews], Coroutine],
+    ): ...

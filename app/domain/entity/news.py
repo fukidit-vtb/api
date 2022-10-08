@@ -21,3 +21,11 @@ class News(BaseModel):
 
 class NewsList(ListDTO):
     list: List[News]
+
+
+__all__ = [
+    "Roles",
+    "News",
+    "NewsFilter",
+    "NewsList",
+]
