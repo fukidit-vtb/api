@@ -31,12 +31,14 @@ class NewsService:
             insides=InsidesList(
                 has_next=False,
                 list=[Inside(id=0, source="undefined", data=i)
-                      for i in inside_instance.search(role_ru)]
+                      for i in inside_instance.search(role_ru)],
+                **params.dict(),
             ),
             trends=TrendsList(
                 has_next=False,
                 list=[Trend(id=0, source="undefined", data=i)
-                      for i in []]  # ....search(role_ru)                ]
+                      for i in []],  # ....search(role_ru)                ]
+                **params.dict(),
             ),
         )
 
