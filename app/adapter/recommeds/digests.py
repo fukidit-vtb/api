@@ -17,7 +17,7 @@ model_RabotaRu = model_RabotaRu.eval()
 df = pd.read_feather("rabota_interfax_vac_news.feather")
 
 
-class NewsSearcher:
+class DigestAdapter:
     def __init__(
             self,
             dataframe: pd.DataFrame,
@@ -61,4 +61,4 @@ class NewsSearcher:
         return results["text"].to_list()[:10][:3]
 
 
-search_instance = NewsSearcher(df, model_RabotaRu, tokenizer_RabotaRu, device)
+search_instance = DigestAdapter(df, model_RabotaRu, tokenizer_RabotaRu, device)
