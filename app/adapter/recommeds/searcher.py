@@ -6,7 +6,7 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
-device = torch.device('cpu')
+device = torch.device("cpu")
 
 tokenizer_RabotaRu = AutoTokenizer.from_pretrained("RabotaRu/HRBert-mini",
                                                    low_memory=True)
@@ -14,10 +14,11 @@ model_RabotaRu = AutoModelForMaskedLM.from_pretrained("RabotaRu/HRBert-mini",
                                                       low_cpu_mem_usage=True)
 model_RabotaRu = model_RabotaRu.eval()
 
-df = pd.read_feather("rabota_interfax_vac_news.feather")
+news_df = pd.read_feather("rabota_interfax_vac_news.feather")
+inside_df = pd.read_feather("tinkoff_invest_emb.feather")
 
 
-class DigestAdapter:
+class SearchAdapter:
     def __init__(
             self,
             dataframe: pd.DataFrame,
@@ -39,7 +40,7 @@ class DigestAdapter:
             padding=True,
             max_length=300,
             truncation=True,
-            return_tensors='pt')
+            return_tensors="pt")
         return encoded.to(self.device)
 
     def encode_model(self, encoded):
@@ -58,7 +59,23 @@ class DigestAdapter:
             .cpu() \
             .numpy()
         results = self.dataframe.sort_values(by="similarity", ascending=False)
-        return results["text"].to_list()[:10][:3]
+        return results["text"].to_list()
 
 
-search_instance = DigestAdapter(df, model_RabotaRu, tokenizer_RabotaRu, device)
+digest_instance = SearchAdapter(
+    news_df,
+    model_RabotaRu,
+    tokenizer_RabotaRu,
+    device)
+
+news_instance = SearchAdapter(
+    news_df,
+    model_RabotaRu,
+    tokenizer_RabotaRu,
+    device)
+
+inside_instance = SearchAdapter(
+    inside_df,
+    model_RabotaRu,
+    tokenizer_RabotaRu,
+    device)
