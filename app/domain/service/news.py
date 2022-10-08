@@ -23,6 +23,7 @@ class NewsService:
 
         return NewsList(
             has_next=False,
-            list=search_instance.search(role_ru),
+            list=[News(id=0, source="undefined", data=i)
+                  for i in search_instance.search(role_ru)],
             **params.dict(),
         )
