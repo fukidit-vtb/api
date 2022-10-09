@@ -21,17 +21,19 @@ class NewsService:
         else:
             raise NotImplemented(f"Role {role} doesn't exists")
 
+        pi = [(params.page - 1) * 10, params.page * 10]
+
         return NewsList(
             digests=DigestsList(
                 has_next=False,
                 list=[News(id=0, source="undefined", data=i)
-                      for i in digest_instance.search(role_ru)],
+                      for i in digest_instance.search(role_ru)[pi[0]:pi[1]]],
                 **params.dict(),
             ),
             insides=InsidesList(
                 has_next=False,
                 list=[Inside(id=0, source="undefined", data=i)
-                      for i in inside_instance.search(role_ru)],
+                      for i in inside_instance.search(role_ru)[pi[0]:pi[1]]],
                 **params.dict(),
             ),
             trends=TrendsList(
