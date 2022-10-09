@@ -22,7 +22,7 @@ class NewsService:
         else:
             raise NotImplemented(f"Role {role} doesn't exists")
 
-        pi = [(params.page - 1) * 10, params.page * 10]
+        pi = [(params.page - 1) * 3, params.page * 3]
 
         return NewsList(
             digests=DigestsList(
