@@ -1,6 +1,7 @@
 from abc import ABC
 
-from app.adapter.recommeds.searcher import digest_instance, inside_instance
+from app.adapter.recommeds.searcher import digest_instance, inside_instance, \
+    summarize
 from app.domain.entity.news import *
 
 
@@ -32,7 +33,7 @@ class NewsService:
             ),
             insides=InsidesList(
                 has_next=False,
-                list=[Inside(id=0, source="undefined", data=i)
+                list=[Inside(id=0, source="undefined", data=summarize[i])
                       for i in inside_instance.search(role_ru)[pi[0]:pi[1]]],
                 **params.dict(),
             ),
