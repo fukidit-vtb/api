@@ -1,6 +1,7 @@
 from abc import ABC
 
 from app.adapter.recommeds.searcher import digest_instance, inside_instance
+from app.adapter.recommeds.trends import trends_items
 from app.domain.entity.news import *
 
 
@@ -39,8 +40,7 @@ class NewsService:
             trends=TrendsList(
                 has_next=False,
                 list=[Trend(id=0, source="undefined", data=i)
-                      for i in []],  # ....search(role_ru)                ]
+                      for i in trends_items],
                 **params.dict(),
             ),
         )
-
