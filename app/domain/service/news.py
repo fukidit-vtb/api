@@ -1,6 +1,6 @@
 from abc import ABC
 
-from app.adapter.recommeds.digests import search_instance
+from app.adapter.recommeds.searcher import digest_instance, inside_instance
 from app.domain.entity.news import *
 
 
@@ -21,9 +21,26 @@ class NewsService:
         else:
             raise NotImplemented(f"Role {role} doesn't exists")
 
+        pi = [(params.page - 1) * 10, params.page * 10]
+
         return NewsList(
-            has_next=False,
-            list=[News(id=0, source="undefined", data=i)
-                  for i in search_instance.search(role_ru)],
-            **params.dict(),
+            digests=DigestsList(
+                has_next=False,
+                list=[News(id=0, source="undefined", data=i)
+                      for i in digest_instance.search(role_ru)[pi[0]:pi[1]]],
+                **params.dict(),
+            ),
+            insides=InsidesList(
+                has_next=False,
+                list=[Inside(id=0, source="undefined", data=i)
+                      for i in inside_instance.search(role_ru)[pi[0]:pi[1]]],
+                **params.dict(),
+            ),
+            trends=TrendsList(
+                has_next=False,
+                list=[Trend(id=0, source="undefined", data=i)
+                      for i in []],  # ....search(role_ru)                ]
+                **params.dict(),
+            ),
         )
+
